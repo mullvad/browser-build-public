@@ -1,4 +1,5 @@
 name: Browser Build
+run-name: Build ${{ inputs.tag }} for ${{ inputs.release }}
 
 on:
   workflow_dispatch:
