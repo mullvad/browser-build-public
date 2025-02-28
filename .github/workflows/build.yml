@@ -27,32 +27,31 @@ jobs:
         with:
           clean: false
 
-            #      - name: Clone tor-browser-build
-            #        run: scripts/clone_tor_browser_build.sh
-            #
-            #      - name: Remove old logs and builds
-            #        run: |
-            #          rm -rf tor-browser-build/logs tor-browser-build/mullvadbrowser tor-browser-build/torbrowser checksums
-            #          mkdir checksums
-            #
-            #      - name: mullvadbrowser
-            #        if: ${{  startsWith(inputs.tag, 'mb') }}
-            #        run: scripts/build_mullvadbrowser.sh
-            #
-            #      - name: torbrowser
-            #        if: ${{  startsWith(inputs.tag, 'tbb') }}
-            #        run: scripts/build_torbrowser.sh
-            #
-            #      - name: Upload build output
-            #        if: ${{ success() || failure() }}
-            #        uses: actions/upload-artifact@v4
-            #        with:
-            #          name: build-output
-            #          path: checksums
-            #
-            #      - name: Upload log files
-            #        if: ${{ success() || failure() }}
-            #        uses: actions/upload-artifact@v4
-            #        with:
-            #          name: logs
-            #          path: tor-browser-build/logs
+      - name: Clone tor-browser-build
+        run: scripts/clone_tor_browser_build.sh
+
+      - name: Remove old logs and builds
+        run: |
+          rm -rf tor-browser-build/logs tor-browser-build/mullvadbrowser tor-browser-build/torbrowser checksums
+          mkdir checksums
+
+      - name: mullvadbrowser
+        if: ${{  startsWith(inputs.tag, 'mb') }}
+        run: scripts/build_mullvadbrowser.sh
+
+      - name: torbrowser
+        if: ${{  startsWith(inputs.tag, 'tbb') }}
+        run: scripts/build_torbrowser.sh
+
+      - name: Upload build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: checksums
+
+      - name: Upload log files
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: tor-browser-build/logs
