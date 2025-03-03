@@ -6,6 +6,10 @@ cd tor-browser-build
 make fetch
 make mullvadbrowser-"$RELEASE" && make mullvadbrowser-incrementals-"$RELEASE"
 
-version=$(echo "$TAG" | grep -oP "\d+\.\d+\.\d+")  # tbb-13.5.11-build1 -> 13.5.11
+# Tor labels their builds as alpha with an 'a' instead of a second dot. This
+# regex extracts the base version string.
+# tbb-13.5.11-build1 -> 13.5.11
+# tbb-13.5a11-build1 -> 13.5a11
+version=$(echo "$TAG" | grep -oP "\d+\.\d+[a\.]\d+")
 
 cp mullvadbrowser/"$RELEASE"/unsigned/"$version"/*.txt ../checksums
