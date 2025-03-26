@@ -6,10 +6,8 @@ cd tor-browser-build
 make fetch
 make torbrowser-"$RELEASE" && make torbrowser-incrementals-"$RELEASE"
 
-# Tor labels their builds as alpha with an 'a' instead of a second dot. This
-# regex extracts the base version string.
-# tbb-13.5.11-build1 -> 13.5.11
-# tbb-13.5a11-build1 -> 13.5a11
-version=$(echo "$TAG" | grep -oP "\d+\.\d+([a\.]\d+)?")
+# build artifacts are stored under a subdir without the "tbb-" or "mb-" prefix
+# of TAG, so ignore the first 4 characters in the case of tbb-
+cp torbrowser/"$RELEASE"/unsigned/"${TAG:4}"/*.txt ../checksums
 
-cp torbrowser/"$RELEASE"/unsigned/"$version"/*.txt ../checksums
+rsync --mkpath "$GITHUB_WORKSPACE/tor-browser-build/torbrowser/$RELEASE/unsigned/${TAG:4}/*.txt" cdn1:/torbrowser/"$TAG"/
