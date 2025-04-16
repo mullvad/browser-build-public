@@ -10,6 +10,6 @@ make mullvadbrowser-"$RELEASE" && make mullvadbrowser-incrementals-"$RELEASE"
 # regex extracts the base version string.
 # tbb-13.5.11-build1 -> 13.5.11
 # tbb-13.5a11-build1 -> 13.5a11
-version=$(echo "$TAG" | grep -oP "\d+\.\d+[a\.]\d+")
+version=$(echo "$TAG" | grep -oP "\d+\.\d+([a\.]\d+)?")
 
 cp mullvadbrowser/"$RELEASE"/unsigned/"$version"/*.txt ../checksums
